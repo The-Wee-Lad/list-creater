@@ -85,8 +85,8 @@ function App() {
       </button>
     </div>
 
-    <a href="https://github.com/The-Wee-Lad" target='_blank' className='fixed bottom-2 left-2 '>
-      <div className='p-1 bg-gray-400 text-gray-500 rounded-sm'>
+    <a href="https://github.com/The-Wee-Lad/list-creater" target='_blank' className='fixed bottom-2 left-2 '>
+      <div className='p-1 bg-gray-400 text-gray-500 rounded-sm hover:bg-black hover:text-white'>
         created by Aditya Narayan
       </div>
     </a>
@@ -149,10 +149,11 @@ function App() {
   let list = <div className='flex flex-col justify-center-safe items-start-safe'>
     <header className='gap-2 p-4 border-black border-2 m-1 flex flex-row items-center justify-left '>
       <div className='text-3xl font-semibold font-heading wrap-break-word overflow-auto  scrollbar-hide '>{userList?.listName ?? ""}</div>
-
-      <a className="lg:ml-5 ml-auto" href="https://buymeacoffee.com/theweelad" target="_blank"><div className='ml-auto text-sm text-center border-black border-1 py-3 px-3 font-special
-      hover:bg-black hover:text-white transition-all duration-300 ease-in-out lg:ml-5
-        font-medium'> Buy Me a Cofee</div></a>
+      <div className='ml-auto text-sm text-center border-black border-1 py-3 px-3 font-special
+      hover:bg-red-600 hover:text-white transition-all duration-300 ease-in-out lg:ml-5
+        font-medium'
+        onClick={() => {localStorage.clear(); location.reload();}}
+        > Delete List </div>
     </header>
     <div className='bg-amber-500 text-amber-950 font-display text-sm p-2 md:p-4'>
       <textarea rows="1" className='bg-white w-full mb-1 p-2 font-sans font-medium text-[1.15rem] resize-none md:text-[1.30rem]'
