@@ -125,7 +125,7 @@ function App() {
               key={index}
               className='w-full border border-black  bg-black flex flex-row '
             >
-              <div className='p-3 w-full font-sans text-black font-medium bg-[#efefef] text-[0.95rem] tracking-wide'>
+              <div className='p-3 w-full font-sans text-black font-medium bg-[#efefef] text-[0.95rem] tracking-wide whitespace-pre-line'>
                 {element}
               </div>
               <div className='bg-blue-100 border-l-2 gap-0.5 p-1 flex flex-row m-[0.01rem] items-center justify-center'>
