@@ -70,6 +70,7 @@ function App() {
           id="listName"
           className="font-body p-2 bg-white border border-black focus:outline-none focus:ring-2 focus:ring-black"
           placeholder="e.g. TODO or Books"
+          autoComplete='off'
           onChange={(e) => {
             setUserList((prev) => ({
               ...(prev ?? {}),
