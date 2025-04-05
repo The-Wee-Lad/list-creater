@@ -50,6 +50,7 @@ function App() {
   }
   function handleCancelEdit(){
     setIsEdit(null);
+    setText("");
   }
 
   let getUserInfoWindow = <div className="relative h-screen bg-black/70 z-[9999] flex flex-col items-center justify-center">
