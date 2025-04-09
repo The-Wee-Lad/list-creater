@@ -4,16 +4,16 @@ function DeleteModal({ onConfirm, onCancel, item = 'List' }) {
             <style>
                 {`
             @keyframes fadeInScale {
-              0% {
+                0% {
                 opacity: 0;
                 transform: scale(0.95);
-              }
-              100% {
+                }
+                100% {
                 opacity: 1;
                 transform: scale(1);
-              }
+                }
             }
-          `}
+            `}
             </style>
             <div className="fixed inset-0 h-screen bg-black/70 z-[9999] flex flex-col items-center justify-center">
                 <div
