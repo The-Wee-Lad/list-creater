@@ -1,15 +1,12 @@
 import { useRef, useState } from 'react'
-import './App.css'
-
 function App() {
   // console.log((localStorage.getItem("list")));
   const [userList, setUserList] = useState(JSON.parse(localStorage.getItem("list")))
   const [showModal, setShowModal] = useState(userList ? false : true);
   const [text, setText] = useState('');
+  const [isEdit, setIsEdit] = useState(null);
   const defaultHeight = useRef(null);
   const textArea = useRef(null);
-  const [currentHeight, setCurrentHeight] = useState(null);
-  const [isEdit, setIsEdit] = useState(null);
 
   function handleNewItem() {
     if (isEdit == null && !text) return;
@@ -171,12 +168,12 @@ function App() {
       <textarea rows="1" className={`bg-white w-full mb-1 p-2 font-sans font-medium text-[1.15rem] resize-none md:text-[1.30rem]
     ${isEdit !== null ? 'focus:outline-auto focus:outline-green-500' : ''}`}
         value={text}
-        style={{ height: currentHeight }}
         onChange={
           (e) => {
             if (!defaultHeight.current)
               defaultHeight.current = e.target.clientHeight;
-            setCurrentHeight(Math.min(e.target.scrollHeight, 10 * defaultHeight.current) + "px");
+            e.target.style.height="auto";
+            e.target.style.height=Math.min(e.target.scrollHeight, 10 * defaultHeight.current) + "px";
             setText(e.target.value);
           }
         }
