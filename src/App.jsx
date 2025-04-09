@@ -7,9 +7,14 @@ function App() {
   const [showDeleteModal, setShowDeleteModal] = useState({ show: false, type: null });
   const [text, setText] = useState('');
   const [isEdit, setIsEdit] = useState(null);
-  const defaultHeight = useRef(null);
+  const defaultHeight = useRef(36);
   const textArea = useRef(null);
-
+  function adjustHeight() {
+    void textArea.current.offsetHeightl;
+    textArea.current.style.height = "auto";
+    textArea.current.style.height = Math.min(textArea.current.scrollHeight, 10 * defaultHeight.current) + "px";
+    console.log(defaultHeight.current);
+  }
   function handleNewItem() {
     if (isEdit == null && !text) return;
     let index = isEdit || 0;
@@ -30,8 +35,8 @@ function App() {
       localStorage.setItem("list", JSON.stringify({ ...userList, list: [] }));
     }
   }
-  function handleDeleteList(){
-    localStorage.clear(); location.reload(); 
+  function handleDeleteList() {
+    localStorage.clear(); location.reload();
   }
 
   function handleDeleteItem(index) {
@@ -46,15 +51,21 @@ function App() {
     setText(userList.list[index]);
     setIsEdit(index);
     textArea.current.focus();
+    textArea.current.value = userList.list[index]
+    adjustHeight()
   }
   function handleFinishEdit() {
     handleNewItem(isEdit);
     setIsEdit(null);
     handleDeleteItem(isEdit + 1);
+    textArea.current.value = "";
+    adjustHeight()
   }
   function handleCancelEdit() {
     setIsEdit(null);
     setText("");
+    textArea.current.value = "";
+    adjustHeight()
   }
 
   let newbutton = <div className='w-[50%] bg-amber-200 m-auto text-xl text-center py-1 px-1 
@@ -104,7 +115,7 @@ function App() {
                 <button className='bg-red-500 w-9 h-9 rounded-lg hover:scale-112 disabled:bg-gray-500 disabled:hover:scale-100
                 transition-all duration-300 ease-in-out'
                   disabled={(isEdit == index)}
-                  onClick={() => { setShowDeleteModal({show:true,type:"Item",index}) }}
+                  onClick={() => { setShowDeleteModal({ show: true, type: "Item", index }) }}
                 >
                   <img src="/delete.png" alt="Create" className='h-full w-full' />
                 </button>
@@ -124,19 +135,19 @@ function App() {
       <div className='ml-auto text-sm text-center border-black border-1 py-3 px-3 font-special
       hover:bg-red-600 hover:text-white transition-all duration-300 ease-in-out lg:ml-5
         font-medium'
-        onClick={() => { setShowDeleteModal({show:true,type:"List"}) }}
+        onClick={() => { setShowDeleteModal({ show: true, type: "List" }) }}
       > Delete List </div>
     </header>
     <div className='bg-amber-500 text-amber-950 font-display text-sm p-2 md:p-4 pb-1 md:pb-1'>
-      <textarea rows="1" className={`bg-white w-full mb-1 p-2 font-sans font-medium text-[1.15rem]resize-none md:text-[1.30rem]
+      <textarea rows="1" className={` bg-white w-full mb-1 p-2 font-sans font-medium text-[1.15rem] resize-none md:text-[1.30rem]
     ${isEdit !== null ? 'focus:outline-auto focus:outline-green-500' : ''}`}
         value={text}
         onChange={
           (e) => {
-            if (!defaultHeight.current)
-              defaultHeight.current = e.target.clientHeight;
-            e.target.style.height = "auto";
-            e.target.style.height = Math.min(e.target.scrollHeight, 10 * defaultHeight.current) + "px";
+            if (!defaultHeight.current && textArea.current)
+              defaultHeight.current = textArea.current.clientHeight;
+            console.log("iNSIDE",defaultHeight.current);
+            adjustHeight();
             setText(e.target.value);
           }
         }
@@ -159,10 +170,10 @@ function App() {
         handleCreateList={handleCreateList}
       />}
       {showDeleteModal?.show && <DeleteModal onConfirm={
-        showDeleteModal.type=="List"?handleDeleteList:()=>{handleDeleteItem(showDeleteModal.index);setShowDeleteModal({show:false})}
-        }
-        onCancel={()=>{setShowDeleteModal({show:false});}}
-        />}
+        showDeleteModal.type == "List" ? handleDeleteList : () => { handleDeleteItem(showDeleteModal.index); setShowDeleteModal({ show: false }) }
+      }
+        onCancel={() => { setShowDeleteModal({ show: false }); }}
+      />}
       {!showModal && list}
     </>
   )
