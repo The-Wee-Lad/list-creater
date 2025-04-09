@@ -173,6 +173,7 @@ function App() {
         showDeleteModal.type == "List" ? handleDeleteList : () => { handleDeleteItem(showDeleteModal.index); setShowDeleteModal({ show: false }) }
       }
         onCancel={() => { setShowDeleteModal({ show: false }); }}
+        item={showDeleteModal.type}
       />}
       {!showModal && list}
     </>
