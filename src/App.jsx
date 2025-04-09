@@ -22,6 +22,8 @@ function App() {
     setUserList(prev => ({ ...prev, list: [...userList.list] }));
     setText("");
     localStorage.setItem("list", JSON.stringify({ ...userList }));
+    textArea.current.value = "";
+    adjustHeight()
   }
   function handleCreateList() {
     if (!userList) {
