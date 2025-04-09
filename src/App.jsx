@@ -7,11 +7,12 @@ function App() {
   const [showModal, setShowModal] = useState(userList ? false : true);
   const [text, setText] = useState('');
   const defaultHeight = useRef(null);
+  const textArea = useRef(null);
   const [currentHeight, setCurrentHeight] = useState(null);
-  const [isEdit,setIsEdit] = useState(null);
+  const [isEdit, setIsEdit] = useState(null);
 
   function handleNewItem() {
-    if (isEdit==null && !text) return;
+    if (isEdit == null && !text) return;
     let index = isEdit || 0;
     userList.list.splice(index, 0, text);
     setUserList(prev => ({ ...prev, list: [...userList.list] }));
@@ -39,16 +40,17 @@ function App() {
     localStorage.setItem("list", JSON.stringify({ ...userList, list: newList }));
   }
   function handleEdit(index) {
+    console.log(textArea);
     setText(userList.list[index]);
-
     setIsEdit(index);
+    textArea.current.focus();
   }
-  function handleFinishEdit(){
+  function handleFinishEdit() {
     handleNewItem(isEdit);
     setIsEdit(null);
-    handleDelete(isEdit+1);
+    handleDelete(isEdit + 1);
   }
-  function handleCancelEdit(){
+  function handleCancelEdit() {
     setIsEdit(null);
     setText("");
   }
@@ -96,17 +98,17 @@ function App() {
   </div>
 
   let newbutton = <div className='w-[50%] bg-amber-200 m-auto text-xl text-center py-1 px-1 
-  hover:bg-black hover:text-white transition-all duration-300 ease-in-out md:p-4 md:w-[25%] md:ml-0'
+  hover:bg-black hover:text-white md:p-4 md:w-[25%] md:ml-0'
     onClick={() => { handleNewItem() }}
   > + New</div>;
 
-  let editClustor = <div className='w-[50%] m-auto md:w-[25%] md:ml-0 flex'>
+  let editClustor = <div className='w-[50%] m-auto md:w-[25%] md:ml-0 flex  transition-all ease-in-out'>
     <div className='w-[50%] bg-green-200 m-auto text-xl text-center py-1 px-1 font-special
-  hover:bg-black hover:text-white transition-all duration-300 ease-in-out md:p-4'
+  hover:bg-black hover:text-white md:p-4  transition-all duration-300 ease-in'
       onClick={() => { handleFinishEdit() }}
     > edit</div>
     <div className='w-[50%] bg-red-200 m-auto text-xl text-center py-1 px-1 font-special
-  hover:bg-black hover:text-white transition-all duration-300 ease-in-out md:p-4'
+  hover:bg-black hover:text-white md:p-4 transition-all duration-300 ease-in'
       onClick={() => { handleCancelEdit() }}
     > cancel </div>
   </div>;
@@ -125,19 +127,27 @@ function App() {
               key={index}
               className='w-full border border-black  bg-black flex flex-row '
             >
-              <div className='p-3 w-full font-sans text-black font-medium bg-[#efefef] text-[0.95rem] tracking-wide whitespace-pre-line'>
+              <div className='p-3 w-full font-sans text-black font-medium bg-[#efefef] text-[0.95rem] tracking-wide 
+              transition-all duration-300 ease-in-out whitespace-pre-line'
+                style={{ backgroundColor: (isEdit == index) && ("gray") }}
+              >
                 {element}
               </div>
               <div className='bg-blue-100 border-l-2 gap-0.5 p-1 flex flex-row m-[0.01rem] items-center justify-center'>
-                <div className='bg-green-500 w-9 h-9 rounded-lg hover:scale-112'
+                <button className='bg-green-500 w-9 h-9 rounded-lg hover:scale-112  disabled:bg-gray-500 disabled:hover:scale-100
+                transition-all duration-300 ease-in-out'
+                  disabled={(isEdit==index)}
                   onClick={() => { handleEdit(index) }}>
                   <img src="/create.png" alt="Create" className='h-full w-full' />
-                </div>
-                <div className='bg-red-500 w-9 h-9 rounded-lg hover:scale-112'
+                </button>
+
+                <button className='bg-red-500 w-9 h-9 rounded-lg hover:scale-112 disabled:bg-gray-500 disabled:hover:scale-100
+                transition-all duration-300 ease-in-out'
+                  disabled={(isEdit==index)}
                   onClick={() => { handleDelete(index); }}
                 >
                   <img src="/delete.png" alt="Create" className='h-full w-full' />
-                </div>
+                </button>
               </div>
             </li>
           ))
@@ -154,11 +164,12 @@ function App() {
       <div className='ml-auto text-sm text-center border-black border-1 py-3 px-3 font-special
       hover:bg-red-600 hover:text-white transition-all duration-300 ease-in-out lg:ml-5
         font-medium'
-        onClick={() => {localStorage.clear(); location.reload();}}
-        > Delete List </div>
+        onClick={() => { localStorage.clear(); location.reload(); }}
+      > Delete List </div>
     </header>
-    <div className='bg-amber-500 text-amber-950 font-display text-sm p-2 md:p-4'>
-      <textarea rows="1" className='bg-white w-full mb-1 p-2 font-sans font-medium text-[1.15rem] resize-none md:text-[1.30rem]'
+    <div className='bg-amber-500 text-amber-950 font-display text-sm p-2 md:p-4 pb-1 md:pb-1'>
+      <textarea rows="1" className={`bg-white w-full mb-1 p-2 font-sans font-medium text-[1.15rem] resize-none md:text-[1.30rem]
+    ${isEdit !== null ? 'focus:outline-auto focus:outline-green-500' : ''}`}
         value={text}
         style={{ height: currentHeight }}
         onChange={
@@ -169,9 +180,10 @@ function App() {
             setText(e.target.value);
           }
         }
+        ref={textArea}
       />
-      {isEdit==null?newbutton:editClustor}
-      <p className='text-[10px] m-2'>Click [ + NEW ] to Add new item. <br />You Can Edit and Delete items as well</p>
+      {isEdit == null ? newbutton : editClustor}
+      <p className='text-[10px] m-2 mb-0'>Click [ + NEW ] to Add new item. <br />You Can Edit and Delete items as well</p>
     </div>
     {newList}
   </div>;
