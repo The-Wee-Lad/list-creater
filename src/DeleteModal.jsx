@@ -1,6 +1,5 @@
 function DeleteModal({ onConfirm, onCancel, item = 'List' }) {
     return (
-        console.log();
         <>
             <style>
                 {`
