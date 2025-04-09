@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
 import CreateListModal from './CreateListModal';
-import DeleteModal from './deleteModal';
+import DeleteModal from './DeleteModal.jsx';
 function App() {
   const [userList, setUserList] = useState(JSON.parse(localStorage.getItem("list")))
   const [showModal, setShowModal] = useState(userList ? false : true);
