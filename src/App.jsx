@@ -14,7 +14,6 @@ function App() {
     userList.list.splice(index, 0, text);
     setUserList(prev => ({ ...prev, list: [...userList.list] }));
     setText("");
-    setCurrentHeight(null);
     localStorage.setItem("list", JSON.stringify({ ...userList }));
   }
   function handleCreateList() {
