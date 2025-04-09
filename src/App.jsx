@@ -125,7 +125,7 @@ function App() {
               className='w-full border border-black  bg-black flex flex-row '
             >
               <div className='p-3 w-full font-sans text-black font-medium bg-[#efefef] text-[0.95rem] tracking-wide 
-              transition-all duration-300 ease-in-out'
+              transition-all duration-300 ease-in-out whitespace-pre-line'
                 style={{ backgroundColor: (isEdit == index) && ("gray") }}
               >
                 {element}
@@ -165,7 +165,7 @@ function App() {
       > Delete List </div>
     </header>
     <div className='bg-amber-500 text-amber-950 font-display text-sm p-2 md:p-4 pb-1 md:pb-1'>
-      <textarea rows="1" className={`bg-white w-full mb-1 p-2 font-sans font-medium text-[1.15rem] resize-none md:text-[1.30rem]
+      <textarea rows="1" className={`bg-white w-full mb-1 p-2 font-sans font-medium text-[1.15rem]resize-none md:text-[1.30rem]
     ${isEdit !== null ? 'focus:outline-auto focus:outline-green-500' : ''}`}
         value={text}
         onChange={
